@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Button, Dropdown, Menu } from "antd";
+import React from "react";
+import "./App.css";
 
 function App() {
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <Button>one</Button>
+        <Button>two</Button>
+        <Button>three</Button>
+        <Button>four</Button>
+      </Menu.Item>
+    </Menu>
+  );
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Button type="primary">Button</Button>
+      <Dropdown overlay={menu}>
+        <p>Hover me</p>
+      </Dropdown>
     </div>
   );
 }
