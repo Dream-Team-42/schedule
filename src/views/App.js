@@ -1,6 +1,6 @@
 import { Button, Dropdown, Menu } from "antd";
 import React from "react";
-import "./App.css";
+import "../assets/css/App.css";
 
 function App() {
   const menu = (
