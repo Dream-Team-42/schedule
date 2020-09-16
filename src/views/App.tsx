@@ -1,9 +1,9 @@
 import { Alert, Button, Dropdown, Menu } from "antd";
 import React from "react";
-import "./App.css";
-import concatString from "./core/concatStrings";
-import getHumanInfo from "./core/getHumanInfo";
-import powInN from "./core/powInN";
+import "../assets/css/App.css";
+import concatString from "../core/concatStrings";
+import getHumanInfo from "../core/getHumanInfo";
+import powInN from "../core/powInN";
 
 function App() {
   const menu = (
