@@ -1,8 +1,8 @@
 import React from 'react';
-import { Table, Tag} from 'antd';
-import './table.scss';
+// import { Table, Tag} from 'antd';
+import './lists.scss';
 
-const TableInfo = () => {
+const Lists = () => {
   const data= [
     {
       key: '1',
@@ -51,9 +51,6 @@ const TableInfo = () => {
       title: 'Тип',
       dataIndex: 'type',
       key: 'type',
-      render: item => (
-        <Tag color='volcano'>{item}</Tag>
-      ),
     },
     {
       title: 'Тема',
@@ -79,14 +76,10 @@ const TableInfo = () => {
 
 
   return (
-    <div className='table'>
-    <Table
-        dataSource={data}
-        columns={columns}
-        pagination={false}
-      />
+    <div className='lists'>
+      <h1>Все на диваххх</h1>
     </div>
   )
 }
 
-export default TableInfo;
+export default Lists;
