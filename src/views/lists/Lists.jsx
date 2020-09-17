@@ -1,41 +1,9 @@
 import React from 'react';
-// import { Table, Tag} from 'antd';
+import { Table, Tag} from 'antd';
+import {data} from '../../core/data';
 import './lists.scss';
 
 const Lists = () => {
-  const data= [
-    {
-      key: '1',
-      dateStart: '2020-07-27',
-      time: '12:00',
-      type: 'questions',
-      thema: '11',
-      timeToComplete: '12',
-      materials: '13',
-      lecturer: 'Nurlan',
-    },
-    {
-      key: '1',
-      dateStart: '2020-07-27',
-      time: '12:00',
-      type: 'questions',
-      thema: '11',
-      timeToComplete: '12',
-      materials: '13',
-      lecturer: 'Nurlan',
-    },
-    {
-      key: '1',
-      dateStart: '2020-07-27',
-      time: '12:00',
-      type: 'questions',
-      thema: '11',
-      timeToComplete: '12',
-      materials: '13',
-      lecturer: 'Nurlan',
-    },
-  ];
-
   const columns = [
     {
       title: 'Дата',
@@ -74,10 +42,37 @@ const Lists = () => {
     },
   ];
 
+  const divTableHead = columns.map(item => {
+    return <div key={item.dataIndex} className="divTableHead">{item.title}</div>
+  });
+
+  const tags = (tagsList) => {
+    return tagsList.map((tag) => <Tag key={tag} color={tag === 'Deadline' ? 'red' : 'blue'}>{tag}</Tag>)
+  };
+  const divTableRow = data().map(item => {
+    return <div key={item.lecturer + item.key} className="divTableRow">
+      <div className="divTableCell">{item.dateStart}</div>
+      <div className="divTableCell">{item.time}</div>
+      <div className="divTableCell type">
+        {tags(item.type)}
+      </div>
+      <div className="divTableCell">{item.thema}</div>
+      <div className="divTableCell">{item.timeToComplete}</div>
+      <div className="divTableCell">{item.materials}</div>
+      <div className="divTableCell">{item.lecturer}</div>
+    </div>
+  });
 
   return (
-    <div className='lists'>
-      <h1>Все на диваххх</h1>
+    <div className="divTable">
+      <div className="divTableHeading">
+        <div className="divTableRow">
+          {divTableHead}
+        </div>
+      </div>
+      <div className="divTableBody">
+        {divTableRow}
+      </div>
     </div>
   )
 }

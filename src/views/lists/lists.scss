@@ -1,0 +1,28 @@
+.divTable {
+  display: table;
+  width: 100%;
+  .divTableHeading {
+    background-color: #EEE;
+    display: table-header-group;
+    font-weight: bold;
+  }
+  .divTableBody {
+    display: table-row-group;
+  }
+  .divTableRow {
+    display: table-row;
+    .type {
+      width: 50px;
+      text-align: center;
+      &>span {
+        margin: 1px;
+      }
+    }
+  }
+  .divTableCell,
+  .divTableHead {
+    border-top: 1px solid #999999;
+    display: table-cell;
+    padding: 10px;
+  }
+}
