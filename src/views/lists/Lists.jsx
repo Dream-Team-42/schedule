@@ -1,19 +1,29 @@
 import React from 'react';
-import { Table, Tag} from 'antd';
+import { Button, Tag} from 'antd';
 import {data} from '../../core/data';
 import './lists.scss';
 
 const Lists = () => {
   const columns = [
     {
-      title: 'Дата',
+      title: 'Задание',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Время начала',
       dataIndex: 'dateStart',
       key: 'dateStart',
     },
     {
-      title: 'Время',
-      dataIndex: 'time',
-      key: 'time',
+      title: 'Время сдачи',
+      dataIndex: 'dateTime',
+      key: 'dateTime',
+    },
+    {
+      title: 'Временная зона',
+      dataIndex: 'timeZone',
+      key: 'timeZone',
     },
     {
       title: 'Тип',
@@ -21,24 +31,29 @@ const Lists = () => {
       key: 'type',
     },
     {
-      title: 'Тема',
-      dataIndex: 'thema',
-      key: 'thema',
+      title: 'Описание',
+      dataIndex: 'description',
+      key: 'description',
     },
     {
-      title: 'Время на прохождение',
-      dataIndex: 'timeToComplete',
-      key: 'TimeToComplete',
+      title: 'Ссылки',
+      dataIndex: 'descriptionUrl',
+      key: 'descriptionUrl',
     },
     {
-      title: 'Материалы, которые надо изучить к теме',
-      dataIndex: 'materials',
-      key: 'Materials',
+      title: 'Место',
+      dataIndex: 'place',
+      key: 'place',
     },
     {
-      title: 'Лектор',
-      dataIndex: 'lecturer',
-      key: 'Lecturer',
+      title: 'Комментарий',
+      dataIndex: 'comment',
+      key: 'comment',
+    },
+    {
+      title: 'Организатор',
+      dataIndex: 'organizer',
+      key: 'organizer',
     },
   ];
 
@@ -46,20 +61,27 @@ const Lists = () => {
     return <div key={item.dataIndex} className="divTableHead">{item.title}</div>
   });
 
-  const tags = (tagsList) => {
+  const tags = (t) => {
+    const tagsList = t.split(' ');
+    console.log(tagsList);
     return tagsList.map((tag) => <Tag key={tag} color={tag === 'Deadline' ? 'red' : 'blue'}>{tag}</Tag>)
   };
-  const divTableRow = data().map(item => {
-    return <div key={item.lecturer + item.key} className="divTableRow">
-      <div className="divTableCell">{item.dateStart}</div>
-      <div className="divTableCell">{item.time}</div>
+  const divTableRow = data.map(item => {
+    return <div key={item.id} className="divTableRow">
+      <div className="divTableCell">{item.name}</div>
+      <div className="divTableCell dateStart">{item.dateStart}</div>
+      <div className="divTableCell dateStart">{item.dateTime}</div>
+      <div className="divTableCell">{item.timeZone}</div>
       <div className="divTableCell type">
         {tags(item.type)}
       </div>
-      <div className="divTableCell">{item.thema}</div>
-      <div className="divTableCell">{item.timeToComplete}</div>
-      <div className="divTableCell">{item.materials}</div>
-      <div className="divTableCell">{item.lecturer}</div>
+      <div className="divTableCell">{item.description}</div>
+      <div className="divTableCell">
+        <Button href={item.descriptionUrl} target="_blank" type="link">Документация</Button>
+      </div>
+      <div className="divTableCell">{item.place}</div>
+      <div className="divTableCell">{item.comment}</div>
+      <div className="divTableCell">{item.organizer}</div>
     </div>
   });
 

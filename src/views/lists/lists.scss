@@ -2,9 +2,7 @@
   display: table;
   width: 100%;
   .divTableHeading {
-    background-color: #EEE;
     display: table-header-group;
-    font-weight: bold;
   }
   .divTableBody {
     display: table-row-group;
@@ -18,11 +16,22 @@
         margin: 1px;
       }
     }
+    .dateStart {
+      min-width: 100px;
+    }
   }
   .divTableCell,
   .divTableHead {
-    border-top: 1px solid #999999;
+    border: 1px solid rgba(55, 53, 47, 0.16);
+    box-shadow: #f9f9f9 -2px 2px 0px;
     display: table-cell;
     padding: 10px;
+    align-items: center;
+    line-height: 120%;
+    font-size: 14px;
+  }
+  .divTableHead{
+    color: #868686;
+    font-weight: bolder;
   }
 }
