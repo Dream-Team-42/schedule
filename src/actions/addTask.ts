@@ -10,3 +10,13 @@ export default function addTask(task: Task): AnyAction {
     },
   };
 }
+
+/*
+export function asyncAddTask(task: Task) {
+  return function (dispatch: any): void {
+    setTimeout(() => {
+      dispatch({ type: cmd.ADD_TASK, payload: { ...task } });
+    }, 1500);
+  };
+}
+*/
