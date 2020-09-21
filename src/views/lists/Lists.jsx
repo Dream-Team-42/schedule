@@ -1,7 +1,10 @@
-import React from 'react';
-import { Button, Tag} from 'antd';
-import {data} from '../../core/data';
-import './lists.scss';
+import { Button, Tag } from "antd";
+import React from "react";
+import appStore from "../../appStore";
+import "./addTaskToStore";
+import "./lists.scss";
+
+const data = appStore.getState().taskReducer;
 
 const Lists = () => {
   const columns = [
