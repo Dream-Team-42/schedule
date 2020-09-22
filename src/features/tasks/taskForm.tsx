@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Task } from "../../constants/types";
-import { addTask } from "./taskSlice";
+import { postTask } from "./taskSlice";
 
 const initialTask: Task = {
-  dateStart: "1",
-  dateTime: "2",
-  descriptionUrl: "3",
-  id: "4",
-  name: "5",
-  timeZone: "6",
-  type: "7",
-  comment: "8",
-  description: "9",
-  organizer: "0",
-  place: "x",
+  id: "1",
+  name: "2",
+  dateStart: "3",
+  dateTime: "4",
+  timeZone: "5",
+  type: "6",
+  description: "7",
+  descriptionUrl: "8",
+  place: "9",
+  comment: "10",
+  organizer: "11",
 };
 
 const TaskForm = () => {
@@ -77,7 +77,7 @@ const TaskForm = () => {
         value={task.organizer}
         onChange={(e) => setTask({ ...task, organizer: e.target.value })}
       />
-      <button onClick={() => dispatch(addTask({ ...task }))}>Add Task</button>
+      <button onClick={() => dispatch(postTask(task))}>Add Task</button>
     </div>
   );
 };

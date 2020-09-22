@@ -1,7 +1,4 @@
-import { store } from "../app/store";
-import { addTask } from "../features/tasks/taskSlice";
-
-const data = [
+export const data = [
   {
     comment: "",
     place: "",
@@ -175,13 +172,13 @@ const data = [
   },
 ];
 
-data.forEach((task) => {
-  store.dispatch(addTask(task));
-});
+// data.forEach((task) => {
+//   store.dispatch(addTask(task));
+// });
 
-// после обновления стора идет ререндинг реакта,
-// поменял id, чтобы не ругался на ключ
-setTimeout(() => {
-  const newTask = { ...data[0], id: "dsf324DSds" };
-  store.dispatch(addTask(newTask));
-}, 2000);
+// // после обновления стора идет ререндинг реакта,
+// // поменял id, чтобы не ругался на ключ
+// setTimeout(() => {
+//   const newTask = { ...data[0], id: "dsf324DSds" };
+//   store.dispatch(addTask(newTask));
+// }, 2000);
