@@ -1,10 +1,7 @@
 import { Button, Tag } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
-import { Task } from "../../constants/types";
-import {
-  selectTaskList
-} from "../../features/tasks/taskSlice";
+import { selectTaskList } from "../../features/tasks/taskSlice";
 import "./lists.scss";
 
 const Lists = () => {
@@ -79,7 +76,7 @@ const Lists = () => {
       </Tag>
     ));
   };
-  const divTableRow = data.map((item: Task) => {
+  const divTableRow = data.map((item) => {
     return (
       <div key={item.id} className="divTableRow">
         <div className="divTableCell">{item.name}</div>

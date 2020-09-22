@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Task } from "../../constants/types";
-import { addTask } from "../../features/tasks/taskSlice";
+import { addTask } from "./taskSlice";
 
 const initialTask: Task = {
   dateStart: "1",

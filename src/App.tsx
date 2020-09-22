@@ -1,9 +1,9 @@
 import React from "react";
-import "../assets/css/App.css";
-import "../constants/data";
-import Header from "./header/Header";
-import Lists from "./lists/Lists";
-import TaskForm from "./taskForm/taskForm";
+import "./assets/css/App.css";
+import "./constants/data";
+import Header from "./features/header/Header";
+import Lists from "./features/lists/Lists";
+import TaskForm from "./features/tasks/taskForm";
 
 function App() {
   return (

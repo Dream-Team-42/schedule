@@ -179,6 +179,9 @@ data.forEach((task) => {
   store.dispatch(addTask(task));
 });
 
+// после обновления стора идет ререндинг реакта,
+// поменял id, чтобы не ругался на ключ
 setTimeout(() => {
-  store.dispatch(addTask(data[0]));
+  const newTask = { ...data[0], id: "dsf324DSds" };
+  store.dispatch(addTask(newTask));
 }, 2000);
