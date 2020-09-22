@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Task } from "../../constants/types";
+import "./taskModal.module.css";
 import { postTask } from "./taskSlice";
 
 const initialTask: Task = {
@@ -17,7 +18,7 @@ const initialTask: Task = {
   organizer: "11",
 };
 
-const TaskForm = () => {
+const TaskModal = () => {
   const dispatch = useDispatch();
   const [task, setTask] = useState(initialTask);
   return (
@@ -82,4 +83,4 @@ const TaskForm = () => {
   );
 };
 
-export default TaskForm;
+export default TaskModal;
