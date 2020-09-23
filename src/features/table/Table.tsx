@@ -1,5 +1,5 @@
+import { Table, Tag } from 'antd';
 import React from 'react';
-import { Table, Tag} from 'antd';
 import './table.scss';
 
 const TableInfo = () => {
@@ -51,7 +51,7 @@ const TableInfo = () => {
       title: 'Тип',
       dataIndex: 'type',
       key: 'type',
-      render: item => (
+      render: (item: string) => (
         <Tag color='volcano'>{item}</Tag>
       ),
     },
