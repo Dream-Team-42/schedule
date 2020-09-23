@@ -27,3 +27,17 @@ export type TaskFields = {
 };
 
 export type TaskState = Task[];
+
+export const emptyTask: Task = {
+  id: "",
+  dateStart: "",
+  dateTime: "",
+  descriptionUrl: "",
+  name: "",
+  timeZone: "",
+  type: "",
+  comment: "",
+  description: "",
+  organizer: "",
+  place: "",
+};
