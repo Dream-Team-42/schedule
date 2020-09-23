@@ -41,3 +41,20 @@ export const emptyTask: Task = {
   organizer: "",
   place: "",
 };
+
+export type Organizer = {
+  id: string;
+  name: string;
+};
+
+export type OrganizerFields = {
+  id: string;
+  name?: string;
+};
+
+export type OrganizerState = Organizer[];
+
+export const emptyOrganizer: Organizer = {
+  id: "",
+  name: "",
+};
