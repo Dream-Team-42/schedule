@@ -3,83 +3,82 @@ import { useDispatch } from "react-redux";
 import { Task } from "../../constants/types";
 import "./taskModal.module.css";
 import { postTask } from "./taskSlice";
+import {Modal} from "antd";
 
 const initialTask: Task = {
-  id: "1",
-  name: "2",
-  dateStart: "3",
-  dateTime: "4",
-  timeZone: "5",
-  type: "6",
-  description: "7",
-  descriptionUrl: "8",
-  place: "9",
-  comment: "10",
-  organizer: "11",
+  id: "",
+  name: "",
+  dateStart: "",
+  dateTime: "",
+  timeZone: "",
+  type: "",
+  description: "",
+  descriptionUrl: "",
+  place: "",
+  comment: "",
+  organizer: "",
 };
 
 const TaskModal = () => {
   const dispatch = useDispatch();
   const [task, setTask] = useState(initialTask);
-  return (
-    <div>
-      <input
-        type="text"
-        value={task.id}
-        onChange={(e) => setTask({ ...task, id: e.target.value })}
-      />
-      <input
-        type="text"
-        value={task.name}
-        onChange={(e) => setTask({ ...task, name: e.target.value })}
-      />
-      <input
-        type="text"
-        value={task.dateStart}
+  return (    
+        <Modal
+          title="Добавление таска в расписание RS School"
+          centered={true}
+          visible={true}  
+          okText="Сохранить"  
+          cancelText="Отмена"
+          onOk={() => dispatch(postTask(task))}>
+          <div className="wrapper">      
+      <label>Название таска:</label>
+        <input
+          type="text"
+          onChange={(e) => setTask({ ...task, name: e.target.value })}
+        />
+      <label>Время начала:</label>
+        <input
+        type="text"        
         onChange={(e) => setTask({ ...task, dateStart: e.target.value })}
       />
+      <label>Время сдачи:</label>
       <input
         type="text"
-        value={task.dateTime}
         onChange={(e) => setTask({ ...task, dateTime: e.target.value })}
       />
+      <label>Тип:</label>      
       <input
         type="text"
-        value={task.timeZone}
-        onChange={(e) => setTask({ ...task, timeZone: e.target.value })}
-      />
-      <input
-        type="text"
-        value={task.type}
         onChange={(e) => setTask({ ...task, type: e.target.value })}
       />
+      <label>Описание:</label>  
+        <input
+          type="text"
+          onChange={(e) => setTask({ ...task, description: e.target.value })}
+        />
+      <label>Ссылка на таск:</label>  
+        <input
+          type="text"
+          onChange={(e) => setTask({ ...task, descriptionUrl: e.target.value })}
+        />
+      <label>Место:</label>  
+        <input
+          type="text"
+          onChange={(e) => setTask({ ...task, place: e.target.value })}
+        />
+      <label>Комментарий:</label>  
       <input
         type="text"
-        value={task.description}
-        onChange={(e) => setTask({ ...task, description: e.target.value })}
-      />
-      <input
-        type="text"
-        value={task.descriptionUrl}
-        onChange={(e) => setTask({ ...task, descriptionUrl: e.target.value })}
-      />
-      <input
-        type="text"
-        value={task.place}
-        onChange={(e) => setTask({ ...task, place: e.target.value })}
-      />
-      <input
-        type="text"
-        value={task.comment}
         onChange={(e) => setTask({ ...task, comment: e.target.value })}
       />
-      <input
-        type="text"
-        value={task.organizer}
-        onChange={(e) => setTask({ ...task, organizer: e.target.value })}
-      />
-      <button onClick={() => dispatch(postTask(task))}>Add Task</button>
+      <label>Организатор:</label>  
+        <input
+          type="text"
+          onChange={(e) => setTask({ ...task, organizer: e.target.value })}
+        />
     </div>
+        </Modal>
+    
   );
 };
 

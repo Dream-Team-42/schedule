@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="container">
       <Header />
-      {user === "mentor" ? <TaskForm /> : ""}
+      {user === "Режим ментора" ? <TaskForm /> : ""}
       {/*<TableInfo/>*/}
       <Lists />
     </div>

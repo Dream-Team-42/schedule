@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 interface HeaderState {
-  user: "mentor" | "student";
+  user: "Режим ментора" | "Режим студента";
 }
 
 const initialState: HeaderState = {
-  user: "student",
+  user: "Режим студента",
 };
 
 export const headerSlice = createSlice({
@@ -14,10 +14,10 @@ export const headerSlice = createSlice({
   initialState,
   reducers: {
     switchToMentor: (state) => {
-      state.user = "mentor";
+      state.user = "Режим ментора";
     },
     switchToStudent: (state) => {
-      state.user = "student";
+      state.user = "Режим студента";
     },
   },
 });

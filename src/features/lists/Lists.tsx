@@ -64,14 +64,10 @@ const Lists = () => {
   const divTableRow = data.map((item, i) => {
     const menu = (
       <Menu>
-        <Menu.ItemGroup title="Управление">
+        <Menu.ItemGroup title="Действия:">
           <Menu.Item>Изменить</Menu.Item>
           <Menu.Item>Удалить</Menu.Item>
-        </Menu.ItemGroup>
-        <SubMenu title="Опции">
-          <Menu.Item>Добавить в закладки</Menu.Item>
-          <Menu.Item>Выделить как Анонс</Menu.Item>
-        </SubMenu>
+        </Menu.ItemGroup>        
       </Menu>
     );
     return (

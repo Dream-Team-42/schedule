@@ -16,8 +16,8 @@ const Header = () => {
       />
       <div className="header__profile" />
       <p>{userType}</p>
-      <button onClick={() => dispatch(switchToMentor())}>mentor</button>
-      <button onClick={() => dispatch(switchToStudent())}>student</button>
+      <button onClick={() => dispatch(switchToMentor())}>Ментор</button>
+      <button onClick={() => dispatch(switchToStudent())}>Студент</button>
     </header>
   );
 };
