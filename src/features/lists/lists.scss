@@ -1,19 +1,18 @@
-$breakpoint: 750px;
+@import '../../assets/css/variables.scss';
+
 $heading-color: #43BAC0;
 
 .is-striped { background-color: rgba(233,200,147,0.2) }
 
+.title  { width: 16%; }
+.dateStart  { width: 11%; }
+.dateTime  { width: 11%; }
+.type  { width: 10%; }
+.description  { width: 15%; }
+.place  { width: 8%; }
+.comment  { width: 9%; }
+.organizer  { width: 10%; }
 
-/* Table column sizing
-================================== */
-.date-cell  { width: 20%; }
-.topic-cell  { width: 41%; }
-.access-link-cell  { width: 13%; }
-.replay-link-cell  { width: 13%; }
-.pdf-cell  { width: 13%; }
-
-/* Apply styles
-================================== */
 .Rtable {
   display: flex;
   flex-wrap: wrap;
@@ -24,12 +23,19 @@ $heading-color: #43BAC0;
   .Rtable-row {
     width: 100%;
     display: flex;
+    position: relative;
+
+    .ant-dropdown-link {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
 
     .Rtable-cell {
       box-sizing: border-box;
       flex-grow: 1;
       padding: 0.8em 1.2em;
-      overflow: hidden; // Or flex might break
+      overflow: hidden;
       list-style: none;
 
       &.column-heading {
@@ -45,6 +51,8 @@ $heading-color: #43BAC0;
       .Rtable-cell--content {
         a {
           font-size: 1em;
+          word-break: break-word;
+          white-space: break-spaces;
         }
 
         .webinar-date {
@@ -55,9 +63,7 @@ $heading-color: #43BAC0;
   }
 }
 
-/* Responsive
-==================================== */
-@media all and (max-width: $breakpoint) {
+@media all and (max-width: $breakpoint750) {
   .is-striped {
     background-color: white;
   }
@@ -116,7 +122,6 @@ $heading-color: #43BAC0;
   }
 }
 
-// Non-Flex modernizer fallback
 .no-flexbox .Rtable {
   display: block;
 
