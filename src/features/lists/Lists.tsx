@@ -1,7 +1,7 @@
 import { Button, Tag } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectTaskList } from "../../features/tasks/taskSlice";
+import { selectTaskList } from "../tasks/taskSlice";
 import "./lists.scss";
 
 const Lists = () => {
@@ -9,59 +9,45 @@ const Lists = () => {
   const columns = [
     {
       title: "Задание",
-      dataIndex: "name",
-      key: "name",
+      key: "title",
     },
     {
       title: "Время начала",
-      dataIndex: "dateStart",
       key: "dateStart",
     },
     {
       title: "Время сдачи",
-      dataIndex: "dateTime",
       key: "dateTime",
     },
     {
-      title: "Временная зона",
-      dataIndex: "timeZone",
-      key: "timeZone",
-    },
-    {
       title: "Тип",
-      dataIndex: "type",
       key: "type",
     },
     {
       title: "Описание",
-      dataIndex: "description",
       key: "description",
     },
     {
       title: "Ссылки",
-      dataIndex: "descriptionUrl",
       key: "descriptionUrl",
     },
     {
       title: "Место",
-      dataIndex: "place",
       key: "place",
     },
     {
       title: "Комментарий",
-      dataIndex: "comment",
       key: "comment",
     },
     {
       title: "Организатор",
-      dataIndex: "organizer",
       key: "organizer",
     },
   ];
 
   const divTableHead = columns.map((item) => {
     return (
-      <div key={item.dataIndex} className="divTableHead">
+      <div key={item.key} className={`Rtable-cell column-heading ${item.key}`}>
         {item.title}
       </div>
     );
@@ -78,31 +64,60 @@ const Lists = () => {
   };
   const divTableRow = data.map((item) => {
     return (
-      <div key={item.id} className="divTableRow">
-        <div className="divTableCell">{item.name}</div>
-        <div className="divTableCell dateStart">{item.dateStart}</div>
-        <div className="divTableCell dateStart">{item.dateTime}</div>
-        <div className="divTableCell">{item.timeZone}</div>
-        <div className="divTableCell type">{tags(item.type)}</div>
-        <div className="divTableCell">{item.description}</div>
-        <div className="divTableCell">
-          <Button href={item.descriptionUrl} target="_blank" type="link">
-            Документация
-          </Button>
+      <div key={item.id} className="Rtable-row">
+        <div className="Rtable-cell date-cell">
+          <div className="Rtable-cell--heading">Задание</div>
+          <div className="Rtable-cell--content date-content">{item.name}</div>
         </div>
-        <div className="divTableCell">{item.place}</div>
-        <div className="divTableCell">{item.comment}</div>
-        <div className="divTableCell">{item.organizer}</div>
+        <div className="Rtable-cell date-cell">
+          <div className="Rtable-cell--heading">Время начала</div>
+          <div className="Rtable-cell--content date-content"><span className="webinar-date">{item.dateStart} ({item.timeZone})</span><br/>6:00
+            pm
+          </div>
+        </div>
+        <div className="Rtable-cell date-cell">
+          <div className="Rtable-cell--heading">Время сдачи</div>
+          <div className="Rtable-cell--content date-content"><span className="webinar-date">{item.dateTime} ({item.timeZone})</span><br/>6:00
+            pm
+          </div>
+        </div>
+        <div className="Rtable-cell date-cell">
+          <div className="Rtable-cell--heading">Тип</div>
+          <div className="Rtable-cell--content date-content">{tags(item.type)}</div>
+        </div>
+        <div className="Rtable-cell date-cell">
+          <div className="Rtable-cell--heading">Описание</div>
+          <div className="Rtable-cell--content date-content">{item.description}</div>
+        </div>
+        <div className="Rtable-cell date-cell">
+          <div className="Rtable-cell--heading">Ссылка</div>
+          <div className="Rtable-cell--content date-content">
+            <Button href={item.descriptionUrl} target="_blank" type="link">
+              Документация
+            </Button></div>
+        </div>
+        <div className="Rtable-cell date-cell">
+          <div className="Rtable-cell--heading">Место</div>
+          <div className="Rtable-cell--content date-content">{item.place}</div>
+        </div>
+        <div className="Rtable-cell date-cell">
+          <div className="Rtable-cell--heading">Комментарий</div>
+          <div className="Rtable-cell--content date-content">{item.comment}</div>
+        </div>
+        <div className="Rtable-cell date-cell">
+          <div className="Rtable-cell--heading">Организатор</div>
+          <div className="Rtable-cell--content date-content">{item.organizer}</div>
+        </div>
       </div>
     );
   });
 
   return (
-    <div className="divTable">
-      <div className="divTableHeading">
-        <div className="divTableRow">{divTableHead}</div>
+    <div className="Rtable Rtable--collapse">
+      <div className="Rtable-row Rtable-row--head">
+        {divTableHead}
       </div>
-      <div className="divTableBody">{divTableRow}</div>
+      {divTableRow}
     </div>
   );
 };
