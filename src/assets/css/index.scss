@@ -1,3 +1,5 @@
+@import '../css/variables.scss';
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -20,4 +22,8 @@ code {
   max-width: 1920px;
   box-sizing: border-box;
   position: relative;
+
+  @media all and (max-width: $breakpoint750) {
+    padding: 0;
+  }
 }

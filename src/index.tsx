@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import App from "./App";
 import { store } from "./app/store";
-import "./assets/css/index.css";
+import "./assets/css/index.scss";
 import { getTaskList } from "./features/tasks/taskSlice";
 import * as serviceWorker from "./serviceWorker";
 
