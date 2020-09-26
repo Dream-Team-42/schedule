@@ -9,15 +9,21 @@ const Header = () => {
 
   return (
     <header className="header">
-      <img
-        src="https://app.rs.school/static/images/logo-rsschool3.png"
-        alt=""
-        className="header__logo"
-      />
+      <div className="head-block">
+        <img
+          src="https://app.rs.school/static/images/logo-rsschool3.png"
+          alt=""
+          className="header__logo"
+        />
+        <p>{userType === "Mentor" ? "Режим ментора" : "Режим студента"}</p>
+        <div className="button-block">
+          <button onClick={() => dispatch(switchToMentor())}>Ментор</button>
+          <button onClick={() => dispatch(switchToStudent())}>Студент</button>
+        </div>
+
+    </div>
       <div className="header__profile" />
-      <p>{userType === "Mentor" ? "Режим ментора" : "Режим студента"}</p>
-      <button onClick={() => dispatch(switchToMentor())}>Ментор</button>
-      <button onClick={() => dispatch(switchToStudent())}>Студент</button>
+      <button className="addTask">Добавить таск</button>
     </header>
   );
 };
