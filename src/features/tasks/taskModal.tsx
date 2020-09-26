@@ -8,7 +8,7 @@ import {
   selectTaskFromModal
 } from "./modalSlice";
 import "./taskModal.module.css";
-import { postTask, updateTask } from "./taskSlice";
+import { postTask, putTask } from "./taskSlice";
 
 const TaskModal = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const TaskModal = () => {
     setTask(taskFromModal);
   }, [taskFromModal]);
 
-  const getOkText = () => {
+  const getOkMessage = () => {
     switch (modalOperation) {
       case "addition":
         return "Добавить";
@@ -33,26 +33,40 @@ const TaskModal = () => {
     }
   };
 
+  const getTitleText = () => {
+    switch (modalOperation) {
+      case "viewing":
+        return "Просмотр задания";
+      case "editing":
+        return "Редактирование задания в расписании";
+      case "addition":
+        return "Добавление задания в расписание RS School";
+    }
+  };
+
+  const handleOnOk = (): void => {
+    switch (modalOperation) {
+      case "addition":
+        dispatch(postTask(task));
+        break;
+      case "editing":
+        dispatch(putTask(task));
+        break;
+      case "viewing":
+        break;
+      default:
+        dispatch(hideModal());
+    }
+    dispatch(hideModal());
+  };
   return (
     <Modal
-      title="Добавление таска в расписание RS School"
+      title={getTitleText()}
       centered={true}
       visible={isShowModal}
-      okText={getOkText()}
+      okText={getOkMessage()}
       cancelText="Отмена"
-      onOk={() => {
-        switch (modalOperation) {
-          case "addition":
-            dispatch(postTask(task));
-            break;
-          case "editing":
-            dispatch(updateTask(task));
-            break;
-          case "viewing":
-          default:
-            dispatch(hideModal());
-        }
-      }}
+      onOk={() => handleOnOk()}
       onCancel={() => dispatch(hideModal())}
     >
       <div className="wrapper">

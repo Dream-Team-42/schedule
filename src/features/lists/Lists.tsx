@@ -2,22 +2,19 @@ import { MoreOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Menu, Tag } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useSelector } from "react-redux";
-// import { selectTaskList } from "../tasks/taskSlice";
-import { data } from "../../constants/data";
 import { selectUser } from "../header/headerSlice";
 import {
   addTaskToModal,
   showModal,
   switchOperation
 } from "../tasks/modalSlice";
-import { deleteTask } from "../tasks/taskSlice";
+import { deleteTask, selectTaskList } from "../tasks/taskSlice";
 import "./lists.scss";
 
 const { SubMenu } = Menu;
 
 const Lists = () => {
-  // const data = useSelector(selectTaskList);
+  const data = useSelector(selectTaskList);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const columns = [
@@ -155,6 +152,7 @@ const Lists = () => {
           <div className="Rtable-cell--heading">Организатор</div>
           <div className="Rtable-cell--content">{item.organizer}</div>
           <Dropdown overlay={menu}>
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a
               className="ant-dropdown-link"
               onClick={(e) => e.preventDefault()}
