@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk, RootState } from "../../app/store";
 import { baseURL, teamID } from "../../constants/magicVars";
-import { emptyTask, Task, TaskFields, TaskState } from "../../constants/types";
+import { Task, TaskState } from "../../constants/types";
 
 const initialState: TaskState = [];
 
@@ -13,7 +13,7 @@ export const taskSlice = createSlice({
      * Add task at state
      */
     addTask: (state: TaskState, action: PayloadAction<Task>): TaskState => {
-      return [...state, { ...emptyTask, ...action.payload }];
+      return [...state, action.payload];
     },
     /**
      * Remove task from state
@@ -27,16 +27,12 @@ export const taskSlice = createSlice({
     /**
      * Update task in state
      */
-    updateTask: (
-      state: TaskState,
-      action: PayloadAction<TaskFields>
-    ): TaskState => {
+    updateTask: (state: TaskState, action: PayloadAction<Task>): TaskState => {
       return state.map((task) => {
         const { payload } = action;
         if (task.id !== payload.id) return task;
 
         return {
-          ...emptyTask,
           ...task,
           ...payload,
         };
@@ -62,8 +58,7 @@ export const postTask = (task: Task): AppThunk => async (dispatch) => {
 
   if (response.ok) {
     dispatch(addTask(task));
-    let json = await response.json();
-    alert(`OK, ${json.id} task add`);
+    alert(`OK, ${task.name} add`);
   } else {
     alert("Error: " + response.status);
   }
@@ -77,7 +72,6 @@ export const getTaskList = (): AppThunk => async (dispatch) => {
 
   if (response.ok) {
     let json = await response.json();
-    console.log(json);
     const { data } = json;
     data.forEach((task: Task) => {
       dispatch(addTask(task));
@@ -106,24 +100,19 @@ export const getTask = (taskID: string): AppThunk => async (dispatch) => {
  *  Update task in database
  * @param task new information
  */
-export const putTask = (task: TaskFields): AppThunk => async (dispatch) => {
-  const newTask: Task = {
-    ...emptyTask,
-    ...task,
-  };
-
+export const putTask = (task: Task): AppThunk => async (dispatch) => {
   const response = await fetch(`${baseURL}/team/${teamID}/event/${task.id}`, {
     method: "PUT",
     headers: { "Content-type": "application/json" },
-    body: JSON.stringify(newTask),
+    body: JSON.stringify(task),
   });
 
   if (response.ok) {
-    dispatch(updateTask(newTask));
-    alert(`Task ${newTask.id} is update.`);
+    dispatch(updateTask(task));
+    alert(`Task ${task.name} is update.`);
   } else {
     alert(
-      `Can't update ${newTask.id}. Status: ${response.status}:${response.statusText}`
+      `Can't update ${task.name}. Status: ${response.status}:${response.statusText}`
     );
   }
 };

@@ -15,7 +15,7 @@ const Header = () => {
         className="header__logo"
       />
       <div className="header__profile" />
-      <p>{userType}</p>
+      <p>{userType === "Mentor" ? "Режим ментора" : "Режим студента"}</p>
       <button onClick={() => dispatch(switchToMentor())}>Ментор</button>
       <button onClick={() => dispatch(switchToStudent())}>Студент</button>
     </header>

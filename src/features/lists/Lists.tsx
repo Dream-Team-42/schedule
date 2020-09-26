@@ -1,15 +1,25 @@
-import { Button, Tag, Menu, Dropdown, message } from "antd";
-import { MoreOutlined } from '@ant-design/icons';
+import { MoreOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Menu, Tag } from "antd";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 // import { useSelector } from "react-redux";
 // import { selectTaskList } from "../tasks/taskSlice";
-import { data } from '../../constants/data'
+import { data } from "../../constants/data";
+import { selectUser } from "../header/headerSlice";
+import {
+  addTaskToModal,
+  showModal,
+  switchOperation
+} from "../tasks/modalSlice";
+import { deleteTask } from "../tasks/taskSlice";
 import "./lists.scss";
 
 const { SubMenu } = Menu;
 
 const Lists = () => {
   // const data = useSelector(selectTaskList);
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const columns = [
     {
       title: "Задание",
@@ -65,13 +75,38 @@ const Lists = () => {
     const menu = (
       <Menu>
         <Menu.ItemGroup title="Действия:">
-          <Menu.Item>Изменить</Menu.Item>
-          <Menu.Item>Удалить</Menu.Item>
-        </Menu.ItemGroup>        
+          <Menu.Item
+            onClick={() => {
+              dispatch(addTaskToModal(item));
+              dispatch(switchOperation("viewing"));
+              dispatch(showModal());
+            }}
+          >
+            Просмотреть
+          </Menu.Item>
+          <Menu.Item
+            onClick={() => {
+              dispatch(addTaskToModal(item));
+              dispatch(switchOperation("editing"));
+              dispatch(showModal());
+            }}
+            style={{ display: user === "Mentor" ? "block" : "none" }}
+          >
+            Изменить
+          </Menu.Item>
+          <Menu.Item
+            onClick={() => {
+              dispatch(deleteTask(item.id));
+            }}
+            style={{ display: user === "Mentor" ? "block" : "none" }}
+          >
+            Удалить
+          </Menu.Item>
+        </Menu.ItemGroup>
       </Menu>
     );
     return (
-      <div key={item.id} className={`Rtable-row ${i%2 ? '':'is-striped'}`}>
+      <div key={item.id} className={`Rtable-row ${i % 2 ? "" : "is-striped"}`}>
         <div className="Rtable-cell date-cell title">
           <div className="Rtable-cell--heading">Задание</div>
           <div className="Rtable-cell--content">
@@ -79,7 +114,6 @@ const Lists = () => {
               {item.name}
             </Button>
           </div>
-          
         </div>
         <div className="Rtable-cell date-cell dateStart">
           <div className="Rtable-cell--heading">Время начала</div>
@@ -87,7 +121,8 @@ const Lists = () => {
             <span className="webinar-date">
               {item.dateStart} ({item.timeZone})
             </span>
-            <br/>6:00 pm
+            <br />
+            6:00 pm
           </div>
         </div>
         <div className="Rtable-cell date-cell dateTime">
@@ -96,40 +131,34 @@ const Lists = () => {
             <span className="webinar-date">
               {item.dateTime} ({item.timeZone})
             </span>
-            <br/>6:00 pm
+            <br />
+            6:00 pm
           </div>
         </div>
         <div className="Rtable-cell date-cell type">
           <div className="Rtable-cell--heading">Тип</div>
-          <div className="Rtable-cell--content">
-            {tags(item.type)}
-          </div>
+          <div className="Rtable-cell--content">{tags(item.type)}</div>
         </div>
         <div className="Rtable-cell date-cell description">
           <div className="Rtable-cell--heading">Описание</div>
-          <div className="Rtable-cell--content">
-            {item.description}
-          </div>
+          <div className="Rtable-cell--content">{item.description}</div>
         </div>
         <div className="Rtable-cell date-cell place">
           <div className="Rtable-cell--heading">Место</div>
-          <div className="Rtable-cell--content">
-            {item.place}
-          </div>
+          <div className="Rtable-cell--content">{item.place}</div>
         </div>
         <div className="Rtable-cell date-cell comment">
           <div className="Rtable-cell--heading">Комментарий</div>
-          <div className="Rtable-cell--content">
-            {item.comment}
-          </div>
+          <div className="Rtable-cell--content">{item.comment}</div>
         </div>
         <div className="Rtable-cell date-cell organizer">
           <div className="Rtable-cell--heading">Организатор</div>
-          <div className="Rtable-cell--content">
-            {item.organizer}
-          </div>
-          <Dropdown overlay={menu} >
-            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+          <div className="Rtable-cell--content">{item.organizer}</div>
+          <Dropdown overlay={menu}>
+            <a
+              className="ant-dropdown-link"
+              onClick={(e) => e.preventDefault()}
+            >
               <MoreOutlined />
             </a>
           </Dropdown>
@@ -140,9 +169,7 @@ const Lists = () => {
 
   return (
     <div className="Rtable Rtable--collapse">
-      <div className="Rtable-row Rtable-row--head">
-        {divTableHead}
-      </div>
+      <div className="Rtable-row Rtable-row--head">{divTableHead}</div>
       {divTableRow}
     </div>
   );
