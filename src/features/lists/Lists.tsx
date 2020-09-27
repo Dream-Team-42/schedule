@@ -81,24 +81,38 @@ const Lists = () => {
           >
             Просмотреть
           </Menu.Item>
-          <Menu.Item
-            onClick={() => {
-              dispatch(addTaskToModal(item));
-              dispatch(switchOperation("editing"));
-              dispatch(showModal());
-            }}
-            style={{ display: user === "Mentor" ? "block" : "none" }}
-          >
-            Изменить
-          </Menu.Item>
-          <Menu.Item
-            onClick={() => {
-              dispatch(deleteTask(item.id));
-            }}
-            style={{ display: user === "Mentor" ? "block" : "none" }}
-          >
-            Удалить
-          </Menu.Item>
+          {user === "Mentor" && (
+            <Menu.Item
+              onClick={() => {
+                dispatch(addTaskToModal(item));
+                dispatch(switchOperation("addition"));
+                dispatch(showModal());
+              }}
+            >
+              Скопировать
+            </Menu.Item>
+          )}
+          {user === "Mentor" && (
+            <Menu.Item
+              onClick={() => {
+                dispatch(addTaskToModal(item));
+                dispatch(switchOperation("editing"));
+                dispatch(showModal());
+              }}
+            >
+              Изменить
+            </Menu.Item>
+          )}
+          {user === "Mentor" && (
+            <Menu.Item
+              onClick={() => {
+                dispatch(deleteTask(item.id));
+              }}
+              style={{ display: user === "Mentor" ? "block" : "none" }}
+            >
+              Удалить
+            </Menu.Item>
+          )}
         </Menu.ItemGroup>
       </Menu>
     );

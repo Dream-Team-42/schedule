@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { message } from "antd";
+import shortid from "shortid";
 import { AppThunk, RootState } from "../../app/store";
 import { baseURL, teamID } from "../../constants/magicVars";
 import { Task, TaskState } from "../../constants/types";
@@ -53,21 +54,23 @@ export default taskSlice.reducer;
 export const postTask = (task: Task): AppThunk => async (dispatch) => {
   const hideMessage = message.loading("Posting the task...", 0);
 
+  const newTask: Task = { ...task, id: shortid.generate() };
+
   const response = await fetch(`${baseURL}/team/${teamID}/event`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(task),
+    body: JSON.stringify(newTask),
   });
 
   if (response.ok) {
     hideMessage();
-    message.success(`${task.name.slice(0, 10)} posted!`);
+    message.success(`${newTask.name.slice(0, 10)} posted!`);
 
-    dispatch(addTask(task));
+    dispatch(addTask(newTask));
   } else {
     hideMessage();
     message.error(
-      `${task.name.slice(0, 10)} not posted. Error: ${response.statusText}`
+      `${newTask.name.slice(0, 10)} not posted. Error: ${response.statusText}`
     );
   }
 };

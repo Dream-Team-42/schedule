@@ -1,5 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { emptyTask } from "../../constants/types";
+import {
+  addTaskToModal,
+  showModal,
+  switchOperation
+} from "../tasks/modalSlice";
 import "./header.scss";
 import { selectUser, switchToMentor, switchToStudent } from "./headerSlice";
 
@@ -20,10 +26,20 @@ const Header = () => {
           <button onClick={() => dispatch(switchToMentor())}>Ментор</button>
           <button onClick={() => dispatch(switchToStudent())}>Студент</button>
         </div>
-
-    </div>
+      </div>
       <div className="header__profile" />
-      <button className="addTask">Добавить таск</button>
+      {userType === "Mentor" && (
+        <button
+          className="addTask"
+          onClick={() => {
+            dispatch(addTaskToModal(emptyTask));
+            dispatch(switchOperation("addition"));
+            dispatch(showModal());
+          }}
+        >
+          Добавить таск
+        </button>
+      )}
     </header>
   );
 };
