@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { message } from "antd";
 import { AppThunk, RootState } from "../../app/store";
 import { baseURL, teamID } from "../../constants/magicVars";
 import {
   emptyOrganizer,
   Organizer,
-  OrganizerFields,
   OrganizerState
 } from "../../constants/types";
 
@@ -59,6 +59,7 @@ export default organizerSlice.reducer;
 export const postOrganizer = (organizer: Organizer): AppThunk => async (
   dispatch
 ) => {
+  const hideMessage = message.loading("Posting the organizer...");
   const response = await fetch(`${baseURL}/team/${teamID}/event`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -66,11 +67,15 @@ export const postOrganizer = (organizer: Organizer): AppThunk => async (
   });
 
   if (response.ok) {
+    hideMessage();
     dispatch(addOrganizer(organizer));
     let json = await response.json();
-    alert(`OK, ${json.id} organizer add`);
+    message.success(`${organizer.name.slice(0, 10)} posted!`);
   } else {
-    alert("Error: " + response.status);
+    hideMessage();
+    message.error(
+      `${organizer.name.slice(0, 10)} not posted. Error: ${response.statusText}`
+    );
   }
 };
 
@@ -78,17 +83,22 @@ export const postOrganizer = (organizer: Organizer): AppThunk => async (
  * Request Organizers from database
  */
 export const getOrganizersList = (): AppThunk => async (dispatch) => {
+  const hideMessage = message.loading("Loading organizers...");
   const response = await fetch(`${baseURL}/team/${teamID}/events`);
 
   if (response.ok) {
+    hideMessage();
+
     let json = await response.json();
-    console.log(json);
     const { data } = json;
     data.forEach((organizer: Organizer) => {
       dispatch(addOrganizer(organizer));
     });
   } else {
-    alert("Error " + response.status);
+    hideMessage();
+    message.error(
+      `Can't get organizers from server. Error: ${response.statusText}`
+    );
   }
 };
 
@@ -99,24 +109,32 @@ export const getOrganizersList = (): AppThunk => async (dispatch) => {
 export const getOrganizer = (organizerID: string): AppThunk => async (
   dispatch
 ) => {
+  const hideMessage = message.loading("Looking for the organizer...");
   const response = await fetch(
     `${baseURL}/team/${teamID}/event/${organizerID}`
   );
 
   if (response.ok) {
+    hideMessage();
+
     let json = await response.json();
-    dispatch(addOrganizer(json));
+    message.success(`${json.name.slice(0, 10)} found!`);
+    return json;
   } else {
-    alert("Error " + response.status);
+    message.error(
+      `Can't get organizer from server. Error: ${response.statusText}`
+    );
   }
 };
 
 /**
  *  Update organizer in database
  */
-export const putOrganizer = (organizer: OrganizerFields): AppThunk => async (
+export const putOrganizer = (organizer: Organizer): AppThunk => async (
   dispatch
 ) => {
+  const hideMessage = message.loading("Updating the organizer...");
+
   const newOrganizer: Organizer = {
     ...emptyOrganizer,
     ...organizer,
@@ -132,11 +150,13 @@ export const putOrganizer = (organizer: OrganizerFields): AppThunk => async (
   );
 
   if (response.ok) {
+    hideMessage();
     dispatch(updateOrganizer(newOrganizer));
-    alert(`Organizer ${newOrganizer.id} is update.`);
+    message.success(`${newOrganizer.name} updated!`);
   } else {
-    alert(
-      `Can't update ${newOrganizer.id}. Status: ${response.status}:${response.statusText}`
+    hideMessage();
+    message.error(
+      `Can't update ${organizer.id}. Status: ${response.status}:${response.statusText}`
     );
   }
 };
@@ -144,6 +164,7 @@ export const putOrganizer = (organizer: OrganizerFields): AppThunk => async (
 export const deleteOrganizer = (organizerID: string): AppThunk => async (
   dispatch
 ) => {
+  const hideMessage = message.loading("Deleting the organizer...");
   const response = await fetch(
     `${baseURL}/team/${teamID}/event/${organizerID}`,
     {
@@ -154,29 +175,14 @@ export const deleteOrganizer = (organizerID: string): AppThunk => async (
   );
 
   if (response.ok) {
+    hideMessage();
     dispatch(removeOrganizer(organizerID));
-    alert(`Organizer ${organizerID} is delete.`);
+
+    message.success("Organizer deleted!");
   } else {
-    alert(
+    hideMessage();
+    message.error(
       `Can't delete ${organizerID}. Status: ${response.status}:${response.statusText}`
     );
-  }
-};
-
-/**
- * Request Organizer from database
- */
-export const getOrganizerList = (): AppThunk => async (dispatch) => {
-  const response = await fetch(`${baseURL}/team/${teamID}/events`);
-
-  if (response.ok) {
-    let json = await response.json();
-    console.log(json);
-    const { data } = json;
-    data.forEach((organizer: Organizer) => {
-      dispatch(addOrganizer(organizer));
-    });
-  } else {
-    alert("Error " + response.status);
   }
 };

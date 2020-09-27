@@ -52,7 +52,7 @@ export default taskSlice.reducer;
  * @param task new Task
  */
 export const postTask = (task: Task): AppThunk => async (dispatch) => {
-  const hideMessage = message.loading("Posting the task...", 0);
+  const hideMessage = message.loading("Posting the task...");
 
   const newTask: Task = { ...task, id: shortid.generate() };
 
@@ -149,7 +149,7 @@ export const putTask = (task: Task): AppThunk => async (dispatch) => {
  * @param taskID delete task id
  */
 export const deleteTask = (taskID: string): AppThunk => async (dispatch) => {
-  const hideMessage = message.loading("Deleting the task...", 0);
+  const hideMessage = message.loading("Deleting the task...");
 
   const response = await fetch(`${baseURL}/team/${teamID}/event/${taskID}`, {
     method: "DELETE",

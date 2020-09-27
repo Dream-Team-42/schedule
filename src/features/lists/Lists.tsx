@@ -108,7 +108,6 @@ const Lists = () => {
               onClick={() => {
                 dispatch(deleteTask(item.id));
               }}
-              style={{ display: user === "Mentor" ? "block" : "none" }}
             >
               Удалить
             </Menu.Item>
