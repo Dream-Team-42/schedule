@@ -6,3 +6,39 @@
     height: 40px;
   }
 }
+
+button {
+  background:#43BAC0;
+  color:#fff;
+  border: 1px solid #43BAC0;
+  width: 100px;
+  height: 30px;
+  margin-right: 5px;
+  outline: none;
+}
+
+button:hover {
+  color: #43BAC0;
+  background: #fff;
+  cursor: pointer;  
+}
+
+.addTask {
+  width: 150px;
+  height: 30px;
+  margin-top: 5px;
+}
+
+.head-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.header__logo {
+  margin-right: 30px;
+}
+
+p {
+  font-size: 16px;
+}

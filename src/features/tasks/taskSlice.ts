@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { message } from "antd";
+import shortid from "shortid";
 import { AppThunk, RootState } from "../../app/store";
 import { baseURL, teamID } from "../../constants/magicVars";
-import { emptyTask, Task, TaskFields, TaskState } from "../../constants/types";
+import { Task, TaskState } from "../../constants/types";
 
 const initialState: TaskState = [];
 
@@ -13,7 +15,7 @@ export const taskSlice = createSlice({
      * Add task at state
      */
     addTask: (state: TaskState, action: PayloadAction<Task>): TaskState => {
-      return [...state, { ...emptyTask, ...action.payload }];
+      return [...state, action.payload];
     },
     /**
      * Remove task from state
@@ -27,16 +29,12 @@ export const taskSlice = createSlice({
     /**
      * Update task in state
      */
-    updateTask: (
-      state: TaskState,
-      action: PayloadAction<TaskFields>
-    ): TaskState => {
+    updateTask: (state: TaskState, action: PayloadAction<Task>): TaskState => {
       return state.map((task) => {
         const { payload } = action;
         if (task.id !== payload.id) return task;
 
         return {
-          ...emptyTask,
           ...task,
           ...payload,
         };
@@ -54,18 +52,26 @@ export default taskSlice.reducer;
  * @param task new Task
  */
 export const postTask = (task: Task): AppThunk => async (dispatch) => {
+  const hideMessage = message.loading("Posting the task...", 0);
+
+  const newTask: Task = { ...task, id: shortid.generate() };
+
   const response = await fetch(`${baseURL}/team/${teamID}/event`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(task),
+    body: JSON.stringify(newTask),
   });
 
   if (response.ok) {
-    dispatch(addTask(task));
-    let json = await response.json();
-    alert(`OK, ${json.id} task add`);
+    hideMessage();
+    message.success(`${newTask.name.slice(0, 10)} posted!`);
+
+    dispatch(addTask(newTask));
   } else {
-    alert("Error: " + response.status);
+    hideMessage();
+    message.error(
+      `${newTask.name.slice(0, 10)} not posted. Error: ${response.statusText}`
+    );
   }
 };
 
@@ -73,17 +79,21 @@ export const postTask = (task: Task): AppThunk => async (dispatch) => {
  * Request Events from database
  */
 export const getTaskList = (): AppThunk => async (dispatch) => {
+  const hideMessage = message.loading("Loading data...");
   const response = await fetch(`${baseURL}/team/${teamID}/events`);
 
   if (response.ok) {
+    hideMessage();
+
     let json = await response.json();
-    console.log(json);
     const { data } = json;
+
     data.forEach((task: Task) => {
       dispatch(addTask(task));
     });
   } else {
-    alert("Error " + response.status);
+    hideMessage();
+    message.error(`Can't get Tasks from server. Error: ${response.statusText}`);
   }
 };
 
@@ -92,13 +102,19 @@ export const getTaskList = (): AppThunk => async (dispatch) => {
  * @param taskID
  */
 export const getTask = (taskID: string): AppThunk => async (dispatch) => {
+  const hideMessage = message.loading("Looking for the task...");
+
   const response = await fetch(`${baseURL}/team/${teamID}/event/${taskID}`);
 
   if (response.ok) {
+    hideMessage();
+
     let json = await response.json();
-    dispatch(addTask(json));
+    message.success(`${json.name.slice(0, 10)} found!`);
+    return json;
   } else {
-    alert("Error " + response.status);
+    hideMessage();
+    message.error(`Can't get task from server. Error: ${response.statusText}`);
   }
 };
 
@@ -106,24 +122,24 @@ export const getTask = (taskID: string): AppThunk => async (dispatch) => {
  *  Update task in database
  * @param task new information
  */
-export const putTask = (task: TaskFields): AppThunk => async (dispatch) => {
-  const newTask: Task = {
-    ...emptyTask,
-    ...task,
-  };
+export const putTask = (task: Task): AppThunk => async (dispatch) => {
+  const hideMessage = message.loading("Updating the task...");
 
   const response = await fetch(`${baseURL}/team/${teamID}/event/${task.id}`, {
     method: "PUT",
     headers: { "Content-type": "application/json" },
-    body: JSON.stringify(newTask),
+    body: JSON.stringify(task),
   });
 
   if (response.ok) {
-    dispatch(updateTask(newTask));
-    alert(`Task ${newTask.id} is update.`);
+    hideMessage();
+    message.success(`${task.name} updated!`);
+
+    dispatch(updateTask(task));
   } else {
-    alert(
-      `Can't update ${newTask.id}. Status: ${response.status}:${response.statusText}`
+    hideMessage();
+    message.error(
+      `Can't update ${task.name.slice(0, 10)}. Error: ${response.statusText}`
     );
   }
 };
@@ -133,6 +149,8 @@ export const putTask = (task: TaskFields): AppThunk => async (dispatch) => {
  * @param taskID delete task id
  */
 export const deleteTask = (taskID: string): AppThunk => async (dispatch) => {
+  const hideMessage = message.loading("Deleting the task...", 0);
+
   const response = await fetch(`${baseURL}/team/${teamID}/event/${taskID}`, {
     method: "DELETE",
     headers: { "Content-type": "application/json" },
@@ -140,10 +158,13 @@ export const deleteTask = (taskID: string): AppThunk => async (dispatch) => {
   });
 
   if (response.ok) {
+    hideMessage();
+    message.success(`Task deleted!`);
+
     dispatch(removeTask(taskID));
-    alert(`Task ${taskID} is delete.`);
   } else {
-    alert(
+    hideMessage();
+    message.error(
       `Can't delete ${taskID}. Status: ${response.status}:${response.statusText}`
     );
   }
