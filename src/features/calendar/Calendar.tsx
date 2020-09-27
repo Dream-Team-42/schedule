@@ -36,39 +36,6 @@ const Calendar = () => {
     return listData;
   };
 
-  function getListData1(value: any) {
-    let listData;
-    switch (value.date()) {
-      case 8:
-        if (value.month() === 9) {
-          listData = [
-            { type: "warning", content: "This is warning event." },
-            { type: "success", content: "This is usual event." },
-          ];
-        }
-        break;
-      case 10:
-        listData = [
-          { type: "warning", content: "This is warning event." },
-          { type: "success", content: "This is usual event." },
-          { type: "error", content: "This is error event." },
-        ];
-        break;
-      case 15:
-        listData = [
-          { type: "warning", content: "This is warning event" },
-          { type: "success", content: "This is very long usual event。。...." },
-          { type: "error", content: "This is error event 1." },
-          { type: "error", content: "This is error event 2." },
-          { type: "error", content: "This is error event 3." },
-          { type: "error", content: "This is error event 4." },
-        ];
-        break;
-      default:
-    }
-    return listData || [];
-  }
-
   function dateCellRender(value: moment.Moment) {
     const listData = getListData(value, tasks);
     return (
@@ -79,7 +46,6 @@ const Calendar = () => {
         {listData.map((item: ListDataItem) => (
           <li key={item.content}>
             <Badge status={item.type} text={item.content} />
-            {/* <Badge status={item.type} text={item.content} /> */}
           </li>
         ))}
       </ul>

@@ -79,14 +79,14 @@ const TaskModal = () => {
         />
         <label>Время начала:</label>
         <input
-          type="text"
+          type="datetime"
           readOnly={modalOperation === "viewing"}
           value={task.dateStart}
           onChange={(e) => setTask({ ...task, dateStart: e.target.value })}
         />
         <label>Время сдачи:</label>
         <input
-          type="text"
+          type="datetime"
           readOnly={modalOperation === "viewing"}
           value={task.dateTime}
           onChange={(e) => setTask({ ...task, dateTime: e.target.value })}

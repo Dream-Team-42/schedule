@@ -14,9 +14,6 @@ function Main() {
             {view !== "list" && (
               <Menu.Item onClick={() => setView("list")}>Таблица</Menu.Item>
             )}
-            {/* {view !== "table" && (
-              <Menu.Item onClick={() => setView("table")}>Таблица</Menu.Item>
-            )} */}
             {view !== "calendar" && (
               <Menu.Item onClick={() => setView("calendar")}>
                 Календарь
@@ -26,7 +23,6 @@ function Main() {
         </Menu.SubMenu>
       </Menu>
       {view === "list" && <Lists />}
-      {/* {view === "table" && <Table />} */}
       {view === "calendar" && <Calendar />}
     </main>
   );
